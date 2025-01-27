@@ -2,10 +2,6 @@ name: docker-build-and-push
 
 on:
   workflow_dispatch:
-    inputs:
-      ref:
-        description: 'Any reference recognizable by git e.g. the branch name or commit SHA'
-        required: true
 
 
 
