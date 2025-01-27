@@ -2,7 +2,13 @@ name: docker-build-and-push
 
 on:
   workflow_dispatch:
-
+    inputs:
+      linkerd-version:
+        description: 'A linkerd release or tag'
+        required: true
+      proxy-version:
+        description: 'A linkerd proxy release or tag'
+        required: true
 
 
 
@@ -20,20 +26,26 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-          ref: ${{ env.REFERENCE }}
+          ref: ${{ inputs.linkerd-version }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker images
         id: build-image
-        env:          
-          LINKERD-PROXY-VERSION: 123
         run: |
-          uptime
-          date
-          echo foobar
+          cd bin
+          pwd
 
+          # pick a github.com/linkerd/linkerd2-proxy release
+          echo "v2.276.0" > .proxy-version
+          
+          # pick a github.com/linkerd/linkerd2 release
+          # git checkout version-2.17
+          
+          ./docker-build-proxy
+          ./docker-build-controller
+          ./docker-build-jaeger-webhook
 
 
 
