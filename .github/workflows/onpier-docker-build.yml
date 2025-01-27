@@ -3,13 +3,14 @@ name: docker-build-and-push
 on:
   workflow_dispatch:
     inputs:
+      # for example: version-2.17
       linkerd-version:
         description: 'A linkerd release or tag'
         required: true
+      # for example: v2.276.0
       proxy-version:
         description: 'A linkerd proxy release or tag'
         required: true
-
 
 
 
@@ -38,7 +39,7 @@ jobs:
           pwd
 
           # pick a github.com/linkerd/linkerd2-proxy release
-          echo "v2.276.0" > .proxy-version
+          echo "${{ inputs.proxy-version }}" > .proxy-version
           
           # pick a github.com/linkerd/linkerd2 release
           # git checkout version-2.17
@@ -47,7 +48,7 @@ jobs:
           ./docker-build-controller
           ./docker-build-jaeger-webhook
 
-
+          docker images
 
 
 
