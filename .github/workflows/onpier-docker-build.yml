@@ -1,0 +1,51 @@
+name: docker-build-and-push
+
+on:
+  workflow_dispatch:
+
+
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: read
+      packages: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ env.REFERENCE }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker images
+        id: build-image
+        env:          
+          LINKERD-PROXY-VERSION: 123
+        run: |
+          uptime
+          date
+          echo foobar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
