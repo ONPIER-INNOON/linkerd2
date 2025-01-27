@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       id-token: write
       contents: read
@@ -29,11 +29,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-
       - name: Build Docker images
         id: build-image
-        env:
-          IMAGE_TAG: ${{ env.ENV }}-${{ github.sha }}
+        env:          
           LINKERD-PROXY-VERSION: 123
         run: |
           uptime
